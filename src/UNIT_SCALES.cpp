@@ -8,10 +8,10 @@ void delay(int ms_delay)
 bool UNIT_SCALES::begin(uint8_t addr) {
     _addr = addr;
     _wire = lgI2cOpen(1, addr, 0);
-    lgI2cClose(_wire);
     if (_wire >= 0) {
         return true;
     } else {
+        std::cout << "lgI2cOpen error code = " << _wire << std::endl;
         return false;
     }
 }

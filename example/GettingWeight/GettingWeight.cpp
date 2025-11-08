@@ -5,6 +5,7 @@
 UNIT_SCALES scales;
 
 void setup() {
+    std::cout << "hello world" << std::endl;
     // M5.begin();
     // display.begin();
     // canvas.setColorDepth(8);  // mono color
@@ -23,6 +24,8 @@ void setup() {
 void loop() {
 
     float weight = scales.getWeight();
+    std::cout << " weight read is : " << weight << " units" << std::endl;
+    delay(1000);
     // float gap    = scales.getGapValue();
     // int adc      = scales.getRawADC();
 
