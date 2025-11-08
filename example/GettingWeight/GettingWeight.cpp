@@ -18,11 +18,14 @@ void setup() {
         std::cout << "scales connect error" << std::endl;
         delay(1000);
     }
+    std::cout << "scales setup " << std::endl;
     // scales.setLEDColor(0x001000);
+    return;
 }
 
 void loop() {
 
+    std::cout << "Loop start" << std::endl;
     float weight = scales.getWeight();
     std::cout << " weight read is : " << weight << " units" << std::endl;
     delay(1000);
@@ -55,11 +58,14 @@ void loop() {
     // if (M5.BtnB.wasPressed()) {
         // scales.setOffset();
     // }
+    return;
 }
 
 int main()
 {
     setup();
-    while (true)
+    for(int i = 0; i<1000; i++)
         loop();
+
+    return 0;
 }

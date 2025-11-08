@@ -34,12 +34,10 @@ bool UNIT_SCALES::readBytes(uint8_t addr, uint8_t reg, uint8_t *buffer,
     // _wire->beginTransmission(addr);
     // _wire->write(reg);
     // _wire->endTransmission(false);
-    _wire = lgI2cOpen(1, addr, 0);
-    u_char byte = 0;
     for (uint8_t i = 0; i < length; i++) {
         buffer[index++] = lgI2cReadByteData(_wire, reg);
     }
-    lgI2cClose(_wire);
+    return true;
 }
 
 uint8_t UNIT_SCALES::getBtnStatus() {
@@ -116,9 +114,10 @@ uint32_t UNIT_SCALES::getLEDColor() {
 }
 
 float UNIT_SCALES::getWeight() {
-    uint8_t data[4];
-    float c;
-    uint8_t *p;
+    std::cout << "getWeight()" << std::endl;
+    uint8_t data[4] {0};
+    float c {0.0F};
+    uint8_t *p = nullptr;
 
     if (readBytes(_addr, UNIT_SCALES_CAL_DATA_REG, data, 4)) {
         p = (uint8_t *)&c;
