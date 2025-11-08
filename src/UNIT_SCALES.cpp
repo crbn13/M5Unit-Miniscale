@@ -22,7 +22,7 @@ bool UNIT_SCALES::writeBytes(uint8_t addr, uint8_t reg, uint8_t *buffer,
     // _wire->write(reg);
     // _wire->write(buffer, length);
     // if (_wire->endTransmission() == 0) return true;
-    if (lgI2cWriteBlockData(_wire, reg, (char *)buffer, +length) >= 0)
+    if (lgI2cWriteBlockData(_wire, reg, (char *)buffer, +length) == 0)
         return true;
     else
         return false;
@@ -168,7 +168,7 @@ void UNIT_SCALES::setGapValue(float offset) {
 }
 
 void UNIT_SCALES::setOffset(void) {
-    uint8_t datatmp[4];
+    uint8_t datatmp[4] {0};
     datatmp[0] = 1;
 
     writeBytes(_addr, UNIT_SCALES_SET_OFFESET_REG, datatmp, 1);

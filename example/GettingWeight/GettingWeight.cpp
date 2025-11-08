@@ -29,6 +29,9 @@ void loop() {
     float weight = scales.getWeight();
     std::cout << " weight read is : " << weight << " units" << std::endl;
     delay(1000);
+
+    scales.setOffset();
+
     // float gap    = scales.getGapValue();
     // int adc      = scales.getRawADC();
 
@@ -56,8 +59,8 @@ void loop() {
 
     // M5.update();
     // if (M5.BtnB.wasPressed()) {
-        // scales.setOffset();
     // }
+
     return;
 }
 
