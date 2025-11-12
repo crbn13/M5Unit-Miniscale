@@ -1,15 +1,14 @@
 #include "UNIT_SCALES.h"
 
-bool UNIT_SCALES::begin(TwoWire *wire, uint8_t sda, uint8_t scl, uint8_t addr) {
-    _wire = wire;
+void delay(int ms_delay)
+{
+    std::this_thread::sleep_for(std::chrono::milliseconds(ms_delay));
+}
+
+bool UNIT_SCALES::begin(uint8_t addr) {
     _addr = addr;
-    _sda  = sda;
-    _scl  = scl;
-    _wire->begin(_sda, _scl, 400000UL);
-    delay(10);
-    _wire->beginTransmission(_addr);
-    uint8_t error = _wire->endTransmission();
-    if (error == 0) {
+    _wire = lgI2cOpen(1, addr, 0);
+    if (_wire >= 0) {
         return true;
     } else {
         return false;
@@ -18,26 +17,26 @@ bool UNIT_SCALES::begin(TwoWire *wire, uint8_t sda, uint8_t scl, uint8_t addr) {
 
 bool UNIT_SCALES::writeBytes(uint8_t addr, uint8_t reg, uint8_t *buffer,
                              uint8_t length) {
-    _wire->beginTransmission(addr);
-    _wire->write(reg);
-    _wire->write(buffer, length);
-    if (_wire->endTransmission() == 0) return true;
-    return false;
+    // _wire->beginTransmission(addr);
+    // _wire->write(reg);
+    // _wire->write(buffer, length);
+    // if (_wire->endTransmission() == 0) return true;
+    if (lgI2cWriteBlockData(_wire, reg, (char *)buffer, +length) >= 0)
+        return true;
+    else
+        return false;
 }
 
 bool UNIT_SCALES::readBytes(uint8_t addr, uint8_t reg, uint8_t *buffer,
                             uint8_t length) {
     uint8_t index = 0;
-    _wire->beginTransmission(addr);
-    _wire->write(reg);
-    _wire->endTransmission(false);
-    if (_wire->requestFrom(addr, length)) {
-        for (uint8_t i = 0; i < length; i++) {
-            buffer[index++] = _wire->read();
-        }
-        return true;
+    // _wire->beginTransmission(addr);
+    // _wire->write(reg);
+    // _wire->endTransmission(false);
+    u_char byte = 0;
+    for (uint8_t i = 0; i < length; i++) {
+        buffer[index++] = lgI2cReadByteData(_wire, reg);
     }
-    return false;
 }
 
 uint8_t UNIT_SCALES::getBtnStatus() {
@@ -132,10 +131,10 @@ int32_t UNIT_SCALES::getWeightInt() {
     return (data[0] | (data[1] << 8) | (data[2] << 16) | (data[3] << 24));
 }
 
-String UNIT_SCALES::getWeightString() {
+std::string UNIT_SCALES::getWeightString() {
     char *p;
     uint8_t data[16];
-    String res;
+    std::string res;
 
     readBytes(_addr, UNIT_SCALES_CAL_DATA_STRING_REG, data, 16);
     p   = (char *)data;
@@ -205,14 +204,16 @@ uint8_t UNIT_SCALES::getI2CAddress(void) {
 }
 
 uint8_t UNIT_SCALES::getFirmwareVersion(void) {
-    _wire->beginTransmission(_addr);
-    _wire->write(FIRMWARE_VERSION_REG);
-    _wire->endTransmission();
+    // _wire->beginTransmission(_addr);
+    // _wire->write(FIRMWARE_VERSION_REG);
+    // _wire->endTransmission();
+    lgI2cWriteByte(_wire, FIRMWARE_VERSION_REG);
 
     uint8_t RegValue;
 
-    _wire->requestFrom(_addr, 1);
-    RegValue = Wire.read();
+    
+    // _wire->requestFrom(_addr, 1);
+    // RegValue = Wire.read();
     return RegValue;
 }
 

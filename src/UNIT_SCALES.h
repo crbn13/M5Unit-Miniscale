@@ -1,8 +1,13 @@
 #ifndef _UNIT_SCALES_H_
 #define _UNIT_SCALES_H_
 
-#include <Arduino.h>
-#include <Wire.h>
+#include <string>
+#include <memory.h>
+#include <chrono>
+#include <thread>
+// #include <Arduino.h>
+// #include <Wire.h>
+#include <lgpio.h>
 
 // I2C
 #define DEVICE_DEFAULT_ADDR 0x26
@@ -24,20 +29,19 @@
 class UNIT_SCALES {
    private:
     uint8_t _addr;
-    TwoWire *_wire;
+    int _wire;
     uint8_t _sda;
     uint8_t _scl;
     bool writeBytes(uint8_t addr, uint8_t reg, uint8_t *buffer, uint8_t length);
     bool readBytes(uint8_t addr, uint8_t reg, uint8_t *buffer, uint8_t length);
 
    public:
-    bool begin(TwoWire *wire = &Wire, uint8_t sda = 21, uint8_t scl = 22,
-               uint8_t addr = DEVICE_DEFAULT_ADDR);
+    bool begin(uint8_t addr = DEVICE_DEFAULT_ADDR);
     // SCALES
     int32_t getRawADC();
     float getWeight();
     int32_t getWeightInt();
-    String getWeightString();
+    std::string getWeightString();
     float getGapValue();
     void setGapValue(float offset);
     void setOffset(void);
