@@ -19,7 +19,7 @@ void setup() {
         delay(1000);
     }
     std::cout << "scales setup " << std::endl;
-    // scales.setLEDColor(0x001000);
+    scales.setLEDColor(0x001000);
     return;
 }
 
@@ -28,9 +28,12 @@ void loop() {
     std::cout << "Loop start" << std::endl;
     float weight = scales.getWeight();
     std::cout << " weight read is : " << weight << " units" << std::endl;
-    delay(1000);
 
-    scales.setOffset();
+    int32_t adc = scales.getRawADC();
+    std::cout << " adc read is : " << adc << " " << std::endl;
+
+    delay(10);
+
 
     // float gap    = scales.getGapValue();
     // int adc      = scales.getRawADC();

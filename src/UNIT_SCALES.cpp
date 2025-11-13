@@ -18,14 +18,16 @@ bool UNIT_SCALES::begin(uint8_t addr) {
 
 bool UNIT_SCALES::writeBytes(uint8_t addr, uint8_t reg, uint8_t *buffer,
                              uint8_t length) {
-    // _wire->beginTransmission(addr);
-    // _wire->write(reg);
-    // _wire->write(buffer, length);
-    // if (_wire->endTransmission() == 0) return true;
-    if (lgI2cWriteBlockData(_wire, reg, (char *)buffer, +length) == 0)
+    
+    auto status = lgI2cWriteBlockData(_wire, reg, (char *)buffer, +length) ;
+
+    if (status == 0)
         return true;
     else
+    {
+        std::cout << "write failed, code = " << status << std::endl;
         return false;
+    }
 }
 
 bool UNIT_SCALES::readBytes(uint8_t addr, uint8_t reg, uint8_t *buffer,
@@ -34,9 +36,9 @@ bool UNIT_SCALES::readBytes(uint8_t addr, uint8_t reg, uint8_t *buffer,
     // _wire->beginTransmission(addr);
     // _wire->write(reg);
     // _wire->endTransmission(false);
-    for (uint8_t i = 0; i < length; i++) {
-        buffer[index++] = lgI2cReadByteData(_wire, reg);
-    }
+    int count = lgI2cReadI2CBlockData(_wire, reg, (char*)buffer, length);
+    std::cout << " read " << count << " bytes" << std::endl;
+
     return true;
 }
 
