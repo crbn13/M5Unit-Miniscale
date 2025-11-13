@@ -26,6 +26,8 @@
 #define FIRMWARE_VERSION_REG            0xFE
 #define I2C_ADDRESS_REG                 0xFF
 
+void delay(int ms_delay);
+
 class UNIT_SCALES {
    private:
     uint8_t _addr;

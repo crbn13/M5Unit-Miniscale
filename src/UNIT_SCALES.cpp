@@ -8,6 +8,7 @@ void delay(int ms_delay)
 bool UNIT_SCALES::begin(uint8_t addr) {
     _addr = addr;
     _wire = lgI2cOpen(1, addr, 0);
+    lgI2cClose(_wire);
     if (_wire >= 0) {
         return true;
     } else {
@@ -33,10 +34,12 @@ bool UNIT_SCALES::readBytes(uint8_t addr, uint8_t reg, uint8_t *buffer,
     // _wire->beginTransmission(addr);
     // _wire->write(reg);
     // _wire->endTransmission(false);
+    _wire = lgI2cOpen(1, addr, 0);
     u_char byte = 0;
     for (uint8_t i = 0; i < length; i++) {
         buffer[index++] = lgI2cReadByteData(_wire, reg);
     }
+    lgI2cClose(_wire);
 }
 
 uint8_t UNIT_SCALES::getBtnStatus() {
@@ -183,23 +186,23 @@ int32_t UNIT_SCALES::getRawADC() {
 }
 
 uint8_t UNIT_SCALES::setI2CAddress(uint8_t addr) {
-    _wire->beginTransmission(_addr);
-    _wire->write(I2C_ADDRESS_REG);
-    _wire->write(addr);
-    _wire->endTransmission();
+    // _wire->beginTransmission(_addr);
+    // _wire->write(I2C_ADDRESS_REG);
+    // _wire->write(addr);
+    // _wire->endTransmission();
     _addr = addr;
     return _addr;
 }
 
 uint8_t UNIT_SCALES::getI2CAddress(void) {
-    _wire->beginTransmission(_addr);
-    _wire->write(I2C_ADDRESS_REG);
-    _wire->endTransmission();
+    // _wire->beginTransmission(_addr);
+    // _wire->write(I2C_ADDRESS_REG);
+    // _wire->endTransmission();
 
     uint8_t RegValue;
 
-    _wire->requestFrom(_addr, 1);
-    RegValue = Wire.read();
+    // _wire->requestFrom(_addr, 1);
+    // RegValue = Wire.read();
     return RegValue;
 }
 
