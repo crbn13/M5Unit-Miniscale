@@ -19,10 +19,14 @@ bool UNIT_SCALES::begin(uint8_t addr) {
 bool UNIT_SCALES::writeBytes(uint8_t addr, uint8_t reg, uint8_t *buffer,
                              uint8_t length) {
     
-    auto status = lgI2cWriteBlockData(_wire, reg, (char *)buffer, +length) ;
+
+    auto status = lgI2cWriteI2CBlockData(_wire, reg, (char *)buffer, +length) ;
 
     if (status == 0)
+    {
+        std::cout << "successful write " << std::endl;
         return true;
+    }
     else
     {
         std::cout << "write failed, code = " << status << std::endl;

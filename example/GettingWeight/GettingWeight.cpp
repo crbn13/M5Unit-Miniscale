@@ -20,6 +20,7 @@ void setup() {
     }
     std::cout << "scales setup " << std::endl;
     scales.setLEDColor(0x001000);
+    scales.setOffset();
     return;
 }
 
