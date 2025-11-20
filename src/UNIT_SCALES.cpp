@@ -238,6 +238,7 @@ uint8_t UNIT_SCALES::getFirmwareVersion(void) {
 #pragma region WINDOWS
 
 bool UNIT_SCALES::begin(uint8_t addr) {
+    return false;
 }
 
 bool UNIT_SCALES::writeBytes(uint8_t addr, uint8_t reg, uint8_t *buffer,
