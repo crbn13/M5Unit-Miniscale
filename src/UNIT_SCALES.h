@@ -8,7 +8,11 @@
 #include <iostream>
 // #include <Arduino.h>
 // #include <Wire.h>
+#if defined(_WIN32) || defined(_WIN64)
+// windows
+#else
 #include <lgpio.h>
+#endif
 
 // I2C
 #define DEVICE_DEFAULT_ADDR 0x26
