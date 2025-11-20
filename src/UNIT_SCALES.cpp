@@ -242,19 +242,24 @@ bool UNIT_SCALES::begin(uint8_t addr) {
 
 bool UNIT_SCALES::writeBytes(uint8_t addr, uint8_t reg, uint8_t *buffer,
                              uint8_t length) {
+    return false;
 }
 
 bool UNIT_SCALES::readBytes(uint8_t addr, uint8_t reg, uint8_t *buffer,
                             uint8_t length) {
+    return false;
 }
 
 uint8_t UNIT_SCALES::setI2CAddress(uint8_t addr) {
+    return 0u;
 }
 
 uint8_t UNIT_SCALES::getI2CAddress(void) {
+    return 0u;
 }
 
 uint8_t UNIT_SCALES::getFirmwareVersion(void) {
+    return 0u;
 }
 
 #endif
