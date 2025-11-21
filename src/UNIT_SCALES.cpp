@@ -8,49 +8,7 @@ void delay(int ms_delay)
 void UNIT_SCALES::jumpBootloader(void) {
     uint8_t value = 1;
 
-<<<<<<< HEAD
-bool UNIT_SCALES::begin(uint8_t addr, int i2cInterface) {
-    _addr = addr;
-    _wire = lgI2cOpen(i2cInterface, addr, 0);
-    if (_wire >= 0) {
-        return true;
-    } else {
-        std::cout << "lgI2cOpen error code = " << _wire << std::endl;
-        return false;
-    }
-}
-
-bool UNIT_SCALES::writeBytes(uint8_t addr, uint8_t reg, uint8_t *buffer,
-                             uint8_t length) {
-    
-
-    auto status = lgI2cWriteI2CBlockData(_wire, reg, (char *)buffer, +length) ;
-
-    if (status == 0)
-    {
-        std::cout << "successful write " << std::endl;
-        return true;
-    }
-    else
-    {
-        std::cout << "write failed, code = " << status << std::endl;
-        return false;
-    }
-}
-
-bool UNIT_SCALES::readBytes(uint8_t addr, uint8_t reg, uint8_t *buffer,
-                            uint8_t length) {
-    uint8_t index = 0;
-    // _wire->beginTransmission(addr);
-    // _wire->write(reg);
-    // _wire->endTransmission(false);
-    int count = lgI2cReadI2CBlockData(_wire, reg, (char*)buffer, length);
-    std::cout << " read " << count << " bytes" << std::endl;
-
-    return true;
-=======
     writeBytes(_addr, JUMP_TO_BOOTLOADER_REG, (uint8_t *)&value, 1);
->>>>>>> origin/main
 }
 
 uint8_t UNIT_SCALES::getBtnStatus() {
@@ -198,7 +156,7 @@ int32_t UNIT_SCALES::getRawADC() {
 
 #if !defined(_WIN32) || !defined(_WIN64) // posix only area
 #pragma region LINUX
-bool UNIT_SCALES::begin(uint8_t addr) {
+bool UNIT_SCALES::begin(uint8_t addr, int i2cInterface) {
     _addr = addr;
     _wire = lgI2cOpen(1, addr, 0);
     if (_wire >= 0) {
