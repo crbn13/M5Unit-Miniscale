@@ -198,24 +198,37 @@ bool UNIT_SCALES::readBytes(uint8_t addr, uint8_t reg, uint8_t *buffer,
 }
 
 uint8_t UNIT_SCALES::setI2CAddress(uint8_t addr) {
-    // _wire->beginTransmission(_addr);
-    // _wire->write(I2C_ADDRESS_REG);
-    // _wire->write(addr);
-    // _wire->endTransmission();
-    _addr = addr;
-    return _addr;
+    auto status = lgI2cWriteByteData(_wire, I2C_ADDRESS_REG, addr);
+
+    if (status == 0)
+    {
+        std::cout << "successfully set i2c reg to : " << +addr << std::endl;
+        _addr = addr;
+        return addr;
+    }
+    else
+    {
+        std::cout << "I2c reg set fail, code = " << status << std::endl;
+        return 0;
+    }
 }
 
 uint8_t UNIT_SCALES::getI2CAddress(void) {
-    // _wire->beginTransmission(_addr);
-    // _wire->write(I2C_ADDRESS_REG);
-    // _wire->endTransmission();
 
-    uint8_t RegValue;
+    auto addr = lgI2cReadByteData(_wire, I2C_ADDRESS_REG);
 
-    // _wire->requestFrom(_addr, 1);
-    // RegValue = Wire.read();
-    return RegValue;
+    if (addr >= 0)
+    {
+        std::cout << "successful read of i2c address : " << +addr<< std::endl;
+        _addr = addr;
+        return addr;
+    }
+    else
+    {
+        std::cout << "I2c addr read fail, code = " << addr << std::endl;
+        return 0;
+    }
+    return addr;
 }
 
 uint8_t UNIT_SCALES::getFirmwareVersion(void) {
