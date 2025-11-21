@@ -245,11 +245,17 @@ uint8_t UNIT_SCALES::getFirmwareVersion(void) {
     return RegValue;
 }
 
-
+UNIT_SCALES::~UNIT_SCALES()
+{
+    lgI2cClose(_wire);
+}
 
 #else
 #pragma region WINDOWS
 
+UNIT_SCALES::~UNIT_SCALES()
+{
+}
 bool UNIT_SCALES::begin(uint8_t addr) {
     return false;
 }

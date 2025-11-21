@@ -44,6 +44,7 @@ class UNIT_SCALES {
 
    public:
     bool begin(uint8_t addr = DEVICE_DEFAULT_ADDR, int i2cInterface = 1);
+    ~UNIT_SCALES();
     // SCALES
     int32_t getRawADC();
     float getWeight();
