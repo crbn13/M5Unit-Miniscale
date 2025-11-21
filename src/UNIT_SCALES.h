@@ -43,7 +43,7 @@ class UNIT_SCALES {
     bool readBytes(uint8_t addr, uint8_t reg, uint8_t *buffer, uint8_t length);
 
    public:
-    bool begin(uint8_t addr = DEVICE_DEFAULT_ADDR);
+    bool begin(uint8_t addr = DEVICE_DEFAULT_ADDR, int i2cInterface = 1);
     // SCALES
     int32_t getRawADC();
     float getWeight();

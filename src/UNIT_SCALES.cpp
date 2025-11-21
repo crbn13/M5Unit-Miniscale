@@ -7,9 +7,9 @@ void delay(int ms_delay)
 
 #if !defined(_WIN32) || !defined(_WIN64) // posix only area
 
-bool UNIT_SCALES::begin(uint8_t addr) {
+bool UNIT_SCALES::begin(uint8_t addr, int i2cInterface) {
     _addr = addr;
-    _wire = lgI2cOpen(1, addr, 0);
+    _wire = lgI2cOpen(i2cInterface, addr, 0);
     if (_wire >= 0) {
         return true;
     } else {
