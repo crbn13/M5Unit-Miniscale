@@ -84,7 +84,7 @@ uint32_t UNIT_SCALES::getLEDColor() {
 }
 
 float UNIT_SCALES::getWeight() {
-    std::cout << "getWeight()" << std::endl;
+    // std::cout << "getWeight()" << std::endl;
     uint8_t data[4] {0};
     float c {0.0F};
     uint8_t *p = nullptr;
@@ -175,7 +175,7 @@ bool UNIT_SCALES::writeBytes(uint8_t addr, uint8_t reg, uint8_t *buffer,
 
     if (status == 0)
     {
-        std::cout << "successful write " << std::endl;
+        // std::cout << "successful write " << std::endl;
         return true;
     }
     else
@@ -192,7 +192,7 @@ bool UNIT_SCALES::readBytes(uint8_t addr, uint8_t reg, uint8_t *buffer,
     // _wire->write(reg);
     // _wire->endTransmission(false);
     int count = lgI2cReadI2CBlockData(_wire, reg, (char*)buffer, length);
-    std::cout << " read " << count << " bytes" << std::endl;
+    // std::cout << " read " << count << " bytes" << std::endl;
 
     return true;
 }
