@@ -156,6 +156,7 @@ int32_t UNIT_SCALES::getRawADC() {
 
 #if !defined(_WIN32) || !defined(_WIN64) // posix only area
 #pragma region LINUX
+
 bool UNIT_SCALES::begin(uint8_t addr, int i2cInterface) {
     _addr = addr;
     _wire = lgI2cOpen(1, addr, 0);
@@ -256,7 +257,7 @@ UNIT_SCALES::~UNIT_SCALES()
 UNIT_SCALES::~UNIT_SCALES()
 {
 }
-bool UNIT_SCALES::begin(uint8_t addr) {
+bool UNIT_SCALES::begin(uint8_t addr, int i2cInterface) {
     return false;
 }
 
